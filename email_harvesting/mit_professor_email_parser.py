@@ -47,11 +47,11 @@ class MyHTMLParser(HTMLParser):
                     self.name = True
                     self.value_data = True
 
-            if tag == 'div' and self.recording and self.new_record:
-                if attrs[0] == ('class', 'views-field views-field-field-person-title'):
-                    self.key = "Title"
-                    self.title = True
-                    self.value_data = True
+            # if tag == 'div' and self.recording and self.new_record:
+            #     if attrs[0] == ('class', 'views-field views-field-field-person-title'):
+            #         self.key = "Title"
+            #         self.title = True
+            #         self.value_data = True
 
             if tag == 'div' and self.recording and self.new_record:
                 if attrs[0] == ('class', 'views-field views-field-field-person-email'):
@@ -59,11 +59,11 @@ class MyHTMLParser(HTMLParser):
                     self.email = True
                     self.value_data = True
 
-            if tag == 'div' and self.recording and self.new_record:
-                if attrs[0] == ('class', 'views-field views-field-field-person-phone'):
-                    self.key = "Phone"
-                    self.per_phone = True
-                    self.value_data = True
+            # if tag == 'div' and self.recording and self.new_record:
+            #     if attrs[0] == ('class', 'views-field views-field-field-person-phone'):
+            #         self.key = "Phone"
+            #         self.per_phone = True
+            #         self.value_data = True
 
         if self.value_data and (tag == 'a' or tag == 'div'):
             self.get_data = True
@@ -102,54 +102,44 @@ style0 = xlwt.easyxf('font: bold on')
 book = xlwt.Workbook()
 
 sheet1 = book.add_sheet('Mit')
-sheet1.write(0, 0, 'Name', style0)
-sheet1.write(0, 1, 'Title', style0)
-sheet1.write(0, 2, 'Phone', style0)
-sheet1.write(0, 3, 'E-Mail', style0)
+sheet1.write(0, 1, 'First Name', style0)
+sheet1.write(0, 2, 'Last Name', style0)
+# sheet1.write(0, 1, 'Title', style0)
+# sheet1.write(0, 2, 'Phone', style0)
+sheet1.write(0, 0, 'E-Mail', style0)
 
-grid = {'Name': 0,
-        'Title': 1,
-        'Phone': 2,
-        'E-Mail': 3}
+grid = {'First Name': 2,
+        'Last Name': 3,
+        # 'Phone': 2,
+        'E-Mail': 1}
 
 
 for i, row in enumerate(professor_list):
-    
+
     for key in row:
         # print row
         # print key, row[key]
         if key == 'Name':
-            print row[key],
-            print type(row[key])
-            sheet1.write(i + 1, 0, unicode(row[key]))
-        if key == 'Title':
-            sheet1.write(i + 1, 1, str(row[key]))
-        if key == 'Dept:':
-
-            sheet1.write(i + 1, grid['Dept'], str(row[key]))
-        if key == 'Addr:':
-
-            sheet1.write(i + 1, grid['Addr'], str(row[key]))
+            # print row[key],
+            # print type(row[key])
+            first_name = row[key].split(' ')[0]
+            last_name = row[key].split(' ')[-1]
+            sheet1.write(i + 1, 1, unicode(first_name))
+            sheet1.write(i + 1, 2, unicode(last_name))
+        # if key == 'Title':
+        #     sheet1.write(i + 1, 1, str(row[key]))
+        # if key == 'Dept:':
+        #
+        #     sheet1.write(i + 1, grid['Dept'], str(row[key]))
+        # if key == 'Addr:':
+        #
+        #     sheet1.write(i + 1, grid['Addr'], str(row[key]))
         if key == 'Mail:':
             print key
             sheet1.write(i + 1, grid['Mail'], str(row[key]))
-        if key == 'Phone':
 
-            sheet1.write(i + 1, 2, str(row[key]))
         if key == 'Email':
-            sheet1.write(i + 1, 3, str(row[key]))
-        if key == 'Netid:':
-            print key
-            sheet1.write(i + 1, grid['Netid'], str(row[key]))
-        if key == 'Id #:':
-            print key
-            sheet1.write(i + 1, grid['Id'], str(row[key]))
-        if key == 'Voice:':
-            print key
-            sheet1.write(i + 1, grid['Voice'], str(row[key]))
-        if key == 'URL:':
-            print key
-            sheet1.write(i + 1, grid['URL'], str(row[key]))
+            sheet1.write(i + 1, 0, str(row[key]))
 
 
 name = "Mit professor list.xls"
